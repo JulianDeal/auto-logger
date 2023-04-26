@@ -3,6 +3,7 @@ from typing import Any, Callable, Dict, List, Optional
 
 from .config import Config
 
+
 def formatJson(
     args: List[Any],
     kwargs: Dict[str, Any],
@@ -11,6 +12,7 @@ def formatJson(
     objStr: str = "",
     method: Optional[Callable] = None,
     func: Optional[Callable] = None,
+    time: Optional[float] = None,
 ):
     data = dict(args=args, kwargs=kwargs, ret=ret)
     if objStr:
@@ -18,4 +20,6 @@ def formatJson(
         data["object"] = objStr
     else:
         data["function"] = func.__name__ if func else "Unknown"
+    if time:
+        data["time"] = time
     return json.dumps(data, cls=Config.jsonEncoder)
